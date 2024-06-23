@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="header"><img class="logo" src="./assets/pokemon-logo.png" alt="logo"></div>
+  <form id="captureForm">
+    <label for="trainer_name">Nome do Treinador:</label>
+    <input type="text" id="trainer_name" name="trainer_name" size="40" required>
+
+    <label for="capture_date">Data de Captura:</label>
+    <input type="date" id="capture_date" name="capture_date" required>
+
+    <label for="pokemon_name">Pokemon:</label>
+    <select id="pokemon_name" name="pokemon_name" required></select>
+
+    <button class="pokeball-button" type="submit"></button>
+  </form>
+
+  <h2>Capturas</h2>
+  <table id="capturesTable">
+    <thead>
+      <tr>
+        <th>Treinador</th>
+        <th>Data de Captura</th>
+        <th>Pokemon</th>
+        <th>Imagem</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>
