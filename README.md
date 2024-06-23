@@ -31,7 +31,7 @@ Este é o backend para a aplicação Pokedex, desenvolvido com Python, Flask, SQ
 
    ```bash
    git clone https://github.com/mrfrigerio/pokedex.git
-   cd pokedex-api/backend
+   cd pokedex/backend
    ```
 
 2. Crie um ambiente virtual:
