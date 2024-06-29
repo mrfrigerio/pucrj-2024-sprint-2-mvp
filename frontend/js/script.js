@@ -6,12 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchPokemons = async () => {
     const response = await fetch("http://localhost:5050/api/pokemons");
     const pokemons = await response.json();
-    pokemons.forEach((pokemon) => {
-      const option = document.createElement("option");
-      option.value = pokemon.name;
-      option.textContent = pokemon.name;
-      pokemonSelect.appendChild(option);
-    });
+
+    pokemons
+      .sort((p1, p2) => (p1.name > p2.name ? 1 : -1))
+      .forEach((pokemon) => {
+        const option = document.createElement("option");
+        option.value = pokemon.name;
+        option.textContent = pokemon.name;
+        pokemonSelect.appendChild(option);
+      });
   };
 
   const fetchCaptures = async () => {
@@ -36,7 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
         await fetch(`http://localhost:5050/api/captures/${captureId}`, {
           method: "DELETE",
         });
-        fetchCaptures();
+        fetchCaptures().then(() =>
+          setTimeout(() => window.alert("Captura removida com sucesso!"), 1000)
+        );
       });
     });
   };
@@ -49,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
       capture_date: formData.get("capture_date"),
       pokemon_name: formData.get("pokemon_name"),
     };
-    console.log(JSON.stringify(data));
 
     await fetch("http://localhost:5050/api/captures", {
       method: "POST",
@@ -60,7 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     form.reset();
-    fetchCaptures();
+
+    await fetchCaptures().then(() =>
+      setTimeout(() => window.alert("Captura registrada com sucesso!"), 1_000)
+    );
   });
 
   fetchPokemons();
