@@ -6,6 +6,19 @@
  Pokedex Web
 </h1>
 
+# Objetivo
+
+O objetivo da aplicação é a implementação de uma Pokedex que é um cadastro de capturas de Pokemons.
+
+# Tecnologias utilizadas:
+
+- Python;
+- Flask;
+- SQLite;
+- HTML;
+- CSS;
+- Javascript;
+
 # Backend
 
 Este é o backend para a aplicação Pokedex, desenvolvido com Python, Flask, SQLAlchemy e SQLite. A API fornece endpoints para gerenciar capturas de Pokémon, incluindo adição, listagem e exclusão de capturas.
