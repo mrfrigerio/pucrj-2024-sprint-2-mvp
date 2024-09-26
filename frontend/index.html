@@ -4,35 +4,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokedex</title>
+  <title>MyHeart</title>
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="pikachu.png" type="image/x-icon">
+  <link rel="icon" href="heart_favicon.png" type="image/x-icon">
 </head>
 
 <body>
-  <div class="header"><img class="logo" src="./assets/pokemon-logo.png" alt="logo"></div>
-  <form id="captureForm">
-    <label for="trainer_name">Nome do Treinador:</label>
-    <input type="text" id="trainer_name" name="trainer_name" size="40" required>
-
-    <label for="capture_date">Data de Captura:</label>
-    <input type="date" id="capture_date" name="capture_date" required title="É obrigatório informar a data de captura!">
-
-    <label for="pokemon_name">Pokemon:</label>
-    <select id="pokemon_name" name="pokemon_name" required></select>
-
-    <button class="pokeball-button" type="submit"></button>
+  <div class="header"><img class="logo" src="./assets/heart.png" alt="logo"></div>
+  <form id="parametersForm">
+    <label for="patient_name">Nome do paciente:
+      <input type="text" id="patient_name" name="name" size="30" required>
+    </label>
+    <label for="age">Idade (age):
+      <input type="number" id="age" name="age" step="any" size="5" required>
+    </label>
+    <label for="sex">Sexo (0 = Feminino, 1 = Masculino):
+      <input type="number" id="sex" name="sex" min="0" max="1" required>
+    </label>
+    <label for="cp">Tipo de dor no peito (cp) [0-3]:
+      <input type="number" id="cp" name="cp" step="any" size="5" min="0" max="3" required>
+    </label>
+    <label for="trestbps">Pressão arterial em repouso (trestbps):
+      <input type="number" id="trestbps" name="trestbps" step="any" size="10" required>
+    </label>
+    <label for="chol">Colesterol sérico (chol):
+      <input type="number" id="chol" name="chol" step="any" size="10" required>
+    </label>
+    <label for="fbs">Glicemia de jejum (fbs):
+      <input type="number" id="fbs" name="fbs" step="any" size="5" required>
+    </label>
+    <label for="restecg">Eletrocardiograma em repouso (restecg):
+      <input type="number" id="restecg" name="restecg" step="any" size="5" required>
+    </label>
+    <label for="thalach">Frequência cardíaca máxima (thalach):
+      <input type="number" id="thalach" name="thalach" step="any" size="10" required>
+    </label>
+    <label for="exang">Angina induzida por exercício (exang):
+      <input type="number" id="exang" name="exang" step="any" size="5" required>
+    </label>
+    <label for="oldpeak">Depressão ST (Oldpeak):
+      <input type="number" id="oldpeak" name="oldpeak" step="any" size="5" required>
+    </label>
+    <label for="slope">Inclinação do segmento ST (slope):
+      <input type="number" id="slope" name="slope" step="any" size="5" required>
+    </label>
+    <label for="ca">Número de vasos principais coloridos (ca):
+      <input type="number" id="ca" name="ca" step="any" size="5" required>
+    </label>
+    <label for="thal">Tipo de talassemia (thal):
+      <input type="number" id="thal" name="thal" step="any" size="5" required>
+    </label>
+    <button type="submit">Cadastrar</button>
   </form>
 
-  <h2>Capturas</h2>
-  <table id="capturesTable">
+
+
+
+  <h2>Pacientes</h2>
+  <table id="table">
     <thead>
       <tr>
-        <th>Treinador</th>
-        <th>Data de Captura</th>
-        <th>Pokemon</th>
-        <th>Imagem</th>
-        <th>Ações</th>
+        <th>Paciente</th>
+        <th>Idade <br />(age)<br /></th>
+        <th>Sexo <br />(gender)<br /></th>
+        <th>Dor no Peito<br />(cp)</cp>
+        </th>
+        <th>Pressão<br />(trestbps)</th>
+        <th>Colesterol<br />(chol)</th>
+        <th>Glicemia<br />(fbs)</th>
+        <th>Eletrocard<br />(restecg)</th>
+        <th>FreqMáx<br />(thalach)</th>
+        <th>Angina<br />(exang)</th>
+        <th>Depressão ST<br />(Oldpeak)</th>
+        <th>Inclinação ST<br />(slope)</th>
+        <th>Vasos<br />(ca)</th>
+        <th>Talassemia<br />(thal)</th>
+        <th>Resultado<br />(0=Sadio 1=Doente)</th>
+        <th></th>
       </tr>
     </thead>
     <tbody></tbody>

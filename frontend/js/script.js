@@ -1,61 +1,54 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("captureForm");
-  const pokemonSelect = document.getElementById("pokemon_name");
-  const capturesTableBody = document.querySelector("#capturesTable tbody");
+// URL base da API
+const apiUrl = "http://localhost:5050/api/parameter"; // Ajuste a porta conforme necessário
 
-  const fetchPokemons = async () => {
-    const response = await fetch("http://localhost:5050/api/pokemons");
-    const pokemons = await response.json();
+// Função para buscar e exibir os parâmetros na tabela
+async function fetchParameters() {
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const parameters = await response.json();
+    const tableBody = document.querySelector("#table tbody");
+    tableBody.innerHTML = ""; // Limpa a tabela antes de adicionar novos dados
 
-    pokemons
-      .sort((p1, p2) => (p1.name > p2.name ? 1 : -1))
-      .forEach((pokemon) => {
-        const option = document.createElement("option");
-        option.value = pokemon.name;
-        option.textContent = pokemon.name;
-        pokemonSelect.appendChild(option);
-      });
-  };
-
-  const fetchCaptures = async () => {
-    const response = await fetch("http://localhost:5050/api/captures");
-    const captures = await response.json();
-    capturesTableBody.innerHTML = "";
-    captures.forEach((capture) => {
+    // Adiciona os dados recebidos à tabela
+    parameters.forEach((parameter) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-              <td>${capture.trainer_name}</td>
-              <td>${capture.capture_date}</td>
-              <td>${capture.pokemon_name}</td>
-              <td><img src="${capture.pokemon_image}" alt="${capture.pokemon_name}"></td>
-              <td><button class="delete" data-id="${capture.id}">Delete</button></td>
-          `;
-      capturesTableBody.appendChild(row);
+                <td>${parameter.name}</td>
+                <td>${parameter.age}</td>
+                <td>${parameter.sex}</td>
+                <td>${parameter.cp}</td>
+                <td>${parameter.trestbps}</td>
+                <td>${parameter.chol}</td>
+                <td>${parameter.fbs}</td>
+                <td>${parameter.restecg}</td>
+                <td>${parameter.thalach}</td>
+                <td>${parameter.exang}</td>
+                <td>${parameter.oldpeak}</td>
+                <td>${parameter.slope}</td>
+                <td>${parameter.ca}</td>
+                <td>${parameter.thal}</td>
+                <td>${parameter.target}</td>
+                <td><button onclick="deleteParameter(${parameter.id})">Deletar</button></td>
+            `;
+      tableBody.appendChild(row);
     });
+  } catch (error) {
+    console.error("Error fetching parameters:", error);
+  }
+}
 
-    document.querySelectorAll(".delete").forEach((button) => {
-      button.addEventListener("click", async (event) => {
-        const captureId = event.target.dataset.id;
-        await fetch(`http://localhost:5050/api/captures/${captureId}`, {
-          method: "DELETE",
-        });
-        fetchCaptures().then(() =>
-          setTimeout(() => window.alert("Captura removida com sucesso!"), 1000)
-        );
-      });
-    });
-  };
+// Função para cadastrar novos parâmetros
+async function addParameter(event) {
+  event.preventDefault(); // Previne o comportamento padrão do formulário
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const data = {
-      trainer_name: formData.get("trainer_name"),
-      capture_date: formData.get("capture_date"),
-      pokemon_name: formData.get("pokemon_name"),
-    };
+  const formData = new FormData(document.querySelector("#parametersForm"));
+  const data = Object.fromEntries(formData); // Converte FormData em objeto
 
-    await fetch("http://localhost:5050/api/captures", {
+  try {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,13 +56,40 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(data),
     });
 
-    form.reset();
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-    await fetchCaptures().then(() =>
-      setTimeout(() => window.alert("Captura registrada com sucesso!"), 1_000)
-    );
-  });
+    // Após o cadastro, atualiza a tabela
+    fetchParameters();
+    document.querySelector("#parametersForm").reset(); // Limpa o formulário
+  } catch (error) {
+    console.error("Error adding parameter:", error);
+  }
+}
 
-  fetchPokemons();
-  fetchCaptures();
-});
+// Função para deletar parâmetros
+async function deleteParameter(id) {
+  try {
+    const response = await fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    // Após a exclusão, atualiza a tabela
+    fetchParameters();
+  } catch (error) {
+    console.error("Error deleting parameter:", error);
+  }
+}
+
+// Adiciona event listener ao formulário
+document
+  .querySelector("#parametersForm")
+  .addEventListener("submit", addParameter);
+
+// Chama a função para buscar os parâmetros ao carregar a página
+document.addEventListener("DOMContentLoaded", fetchParameters);

@@ -8,7 +8,7 @@
 
 # Objetivo
 
-O objetivo da aplicação é a implementação de uma aplicação full stack para predição de doença cardíaca.
+O objetivo é a implementação de uma aplicação full stack para predição de doença cardíaca.
 
 # Tecnologias utilizadas:
 
@@ -21,19 +21,19 @@ O objetivo da aplicação é a implementação de uma aplicação full stack par
 
 # Backend
 
-Este é o backend para a aplicação Pokedex, desenvolvido com Python, Flask, SQLAlchemy e SQLite. A API fornece endpoints para gerenciar capturas de Pokémon, incluindo adição, listagem e exclusão de capturas.
+Este é o backend para a aplicação, desenvolvido com Python, Scikit-Learn, Flask, SQLAlchemy e SQLite. A API fornece endpoints para gerenciar o CRUD das predições, incluindo adição, listagem e exclusão.
 
 ## Funcionalidades
 
-- Listar Pokémons disponíveis
-- Adicionar uma nova captura
-- Listar capturas existentes
-- Excluir uma captura
+- Listar predições cadastradas
+- Adicionar uma nova predição
+- Excluir uma predição
 
 ## Requisitos
 
 - Python 3.8+
 - Flask
+- Scikit-Learn
 - SQLAlchemy
 - Flask-CORS
 - Pydantic
@@ -43,8 +43,8 @@ Este é o backend para a aplicação Pokedex, desenvolvido com Python, Flask, SQ
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/mrfrigerio/pokedex.git
-   cd pokedex/backend
+   git clone https://github.com/mrfrigerio/pucrj-2024-sprint-2-mvp.git
+   cd pucrj-2024-sprint-2-mvp/backend
    ```
 
 2. Crie um ambiente virtual:
