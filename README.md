@@ -1,14 +1,14 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pokemon Logo" width="150">
+  <img src="frontend/assets/heart.png" alt="Pokemon Logo" width="150">
 </p>
 
 <h1 align="center">
- Pokedex Web
+ Modelo de Predição para Doença Cardíaca
 </h1>
 
 # Objetivo
 
-O objetivo da aplicação é a implementação de uma Pokedex que é um cadastro de capturas de Pokemons.
+O objetivo da aplicação é a implementação de uma aplicação full stack para predição de doença cardíaca.
 
 # Tecnologias utilizadas:
 
