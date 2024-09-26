@@ -47,9 +47,10 @@ Este é o backend para a aplicação, desenvolvido com Python, Scikit-Learn, Fla
    cd pucrj-2024-sprint-2-mvp/backend
    ```
 
-2. Crie um ambiente virtual:
+2. Entre na pasta do backend e crie um ambiente virtual:
 
    ```bash
+   cd backend
    python -m venv venv
    ```
 
@@ -78,6 +79,12 @@ Este é o backend para a aplicação, desenvolvido com Python, Scikit-Learn, Fla
    ```
 
 2. A documentaçõa da API estará disponível em `http://localhost:5050/openapi`.
+
+3. Para rodar o teste automatizado, execute o comando abaixo na pasta ./backend
+
+   ```bash
+   pytest
+   ```
 
 # Frontend
 
