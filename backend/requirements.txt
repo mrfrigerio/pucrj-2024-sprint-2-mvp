@@ -13,7 +13,6 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 pydantic==2.7.4
 pydantic_core==2.18.4
-requests==2.32.3
 SQLAlchemy==2.0.31
 typing_extensions==4.12.2
 urllib3==2.2.2

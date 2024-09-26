@@ -5,6 +5,7 @@ from urllib.parse import unquote
 from models import db, Parameter
 from schemas import AddParameterSchema, DeleteParameterSchema
 from flask_cors import CORS
+import pickle
 
 info = Info(title="Heart Disease API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
@@ -31,43 +32,78 @@ def get_parameters():
     parameters_list = [
         {
             "id": p.id,
-            "patient_name": p.patient_name,
-            "pregnancies": p.pregnancies,
-            "glucose": p.glucose,
-            "blood_pressure": p.blood_pressure,
-            "skin_thickness": p.skin_thickness,
-            "insulin": p.insulin,
-            "bmi": p.bmi,
-            "diabetes_pedigree_function": p.diabetes_pedigree_function,
-            "age": p.age,
+            "name": p.name,  # Nome do paciente
+            "age": p.age,  # Idade
+            "sex": p.sex,  # Sexo: 1 para masculino, 0 para feminino
+            "cp": p.cp,  # tipo de dor torácica Valor 0: angina típica Valor 1: angina atípica Valor 2: dor não anginosa Valor 3: assintomática
+            "trestbps": p.trestbps,  # Pressão arterial em repouso
+            "chol": p.chol,  # Colesterol sérico
+            "fbs": p.fbs,  # Glicemia de jejum
+            "restecg": p.restecg,  # Resultados do eletrocardiograma em repouso
+            "thalach": p.thalach,  # Frequência cardíaca máxima
+            "exang": p.exang,  # Angina induzida por exercício
+            "oldpeak": p.oldpeak,  # Depressão do ST induzida por exercício
+            "slope": p.slope,  # Inclinação do segmento ST
+            "ca": p.ca,  # Número de vasos principais coloridos por fluoroscopia
+            "thal": p.thal,  # Tipo de talassemia
+            "target": p.target,  # Presença de doença cardíaca
         }
         for p in parameters
     ]
+
     return jsonify(parameters_list)
 
 
 @app.post("/api/parameter", tags=[parameters_tag])
-def add_capture(body: AddParameterSchema):
+def add_parameters(body: AddParameterSchema):
     """Add a new parameter"""
-    try:
-        data = Parameter(**request.json)
-    except ValidationError as e:
-        return jsonify(e.errors()), 400
+    with open("cart_classifier.pkl", "rb") as pickle_in:
+        classifier = pickle.load(pickle_in)
+        try:
 
-    new_parameter = Parameter(
-        patient_name=data.patient_name,
-        pregnancies=data.pregnancies,
-        glucose=data.glucose,
-        blood_pressure=data.blood_pressure,
-        skin_thickness=data.skin_thickness,
-        insulin=data.insulin,
-        bmi=data.bmi,
-        diabetes_pedigree_function=data.diabetes_pedigree_function,
-        age=data.age,
-    )
-    db.session.add(new_parameter)
-    db.session.commit()
-    return jsonify({"message": "Patient added successfully"}), 201
+            data = Parameter(**request.json)
+        except ValidationError as e:
+            return jsonify(e.errors()), 400
+
+        new_parameter = Parameter(
+            age=data.age,
+            name=data.name,
+            sex=data.sex,
+            cp=data.cp,
+            trestbps=data.trestbps,
+            chol=data.chol,
+            fbs=data.fbs,
+            restecg=data.restecg,
+            thalach=data.thalach,
+            exang=data.exang,
+            oldpeak=data.oldpeak,
+            slope=data.slope,
+            ca=data.ca,
+            thal=data.thal,
+            target=classifier.predict(  # Resultado previsto pelo classificador
+                [
+                    [
+                        data.age,
+                        data.sex,
+                        data.cp,
+                        data.trestbps,
+                        data.chol,
+                        data.fbs,
+                        data.restecg,
+                        data.thalach,
+                        data.exang,
+                        data.oldpeak,
+                        data.slope,
+                        data.ca,
+                        data.thal,
+                    ]
+                ]
+            )[0],
+        )
+
+        db.session.add(new_parameter)
+        db.session.commit()
+        return jsonify({"message": "Patient added successfully"}), 201
 
 
 @app.delete("/api/parameter/<int:parameter_id>", tags=[parameters_tag])
